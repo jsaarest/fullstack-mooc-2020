@@ -33,7 +33,7 @@ const defaultData = {
 }
 
 const App = () => {
-  // tallenna napit omaan tilaansa
+
   const [data, setData] = useState(defaultData)
   console.log(data)
 
