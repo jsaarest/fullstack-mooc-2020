@@ -18,8 +18,8 @@ const App = (props) => {
     setPoints(arr)
   }
 
-  console.log(selected)
-  console.log(points)
+  //console.log(selected)
+  //console.log(points)
 
   return (
     <div>
