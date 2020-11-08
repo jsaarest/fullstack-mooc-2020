@@ -1,6 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import NewPersonForm from "./components/NewPersonForm";
 import NumbersList from "./components/NumbersList";
+import axios from 'axios'
+
 
 const App = () => {
 
@@ -11,13 +13,17 @@ const App = () => {
   }
   const [values, setValues] = useState(defaultValues)
   const [search, setSearch] = useState('')
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Jaana Pajunen', number: '040-123456' },
-    { name: 'Make Kaurismäki', number: '040-123456' },
-    { name: 'Stuge Litmanen', number: '040-123456' },
-    { name: 'Haloo Helsinki', number: '040-123456' }
-  ])
+  const [ persons, setPersons] = useState([])
+  
+  // Fetch data
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
+
 
   // Handlers
   const handleFilter = (person) => {
@@ -46,10 +52,19 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input value={search} onChange={e => setSearch(e.target.value)}/>
-      <NewPersonForm handleChange={handleChange} handleSubmit={handleSubmit} values={values}/>
+      filter shown with
+      <input value={search} onChange={e => setSearch(e.target.value)}/>
+      <h3>Add a new:</h3>
+      <NewPersonForm
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        values={values}
+      />
       <h2>Numbers</h2>
-      <NumbersList persons={persons} handleFilter={handleFilter}/>
+      <NumbersList
+        persons={persons}
+        handleFilter={handleFilter}
+      />
     </div>
   )
 
