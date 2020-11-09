@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import NewPersonForm from "./components/NewPersonForm";
 import NumbersList from "./components/NumbersList";
-import axios from 'axios'
+import personService from "./services/personService"
 import Notification from "./components/Notification";
 
 
@@ -20,8 +20,7 @@ const App = () => {
 
   // Fetch data
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+      personService.getAll()
       .then(response => {
         setPersons(response.data)
       })
@@ -53,7 +52,7 @@ const App = () => {
 
   const handleDelete = (id, name) => {
     if(window.confirm(`Delete ${name}`)){
-      axios.delete(`http://localhost:3001/persons/${id}`)
+        personService.deleteById(id)
         .then(res => {
           setPersons(persons.filter(person => id !== person.id))
           console.log("deleted user", res)
@@ -72,8 +71,7 @@ const App = () => {
   }
   const handleAdd = () => {
     const person = { name: values.name, number: values.number }
-    axios
-      .post(`http://localhost:3001/persons/`, person)
+      personService.create(person)
       .then(res => {
         console.log("Succesfully added person",res)
         setMessage({message: `Added ${person.name}`, severity: 'success'})
@@ -86,8 +84,7 @@ const App = () => {
   const handleUpdate = (userData) => {
     //console.log(userData)
     if(window.confirm(`${userData.name} is already added to phonebook, replace the old number with a new one?`)){
-      axios
-        .put(`http://localhost:3001/persons/${userData.id}`, userData)
+        personService.update(userData.id, userData)
         .then(res => {
           console.log(res)
           setMessage({message: `Updated ${userData.name}`, severity: 'success'})
