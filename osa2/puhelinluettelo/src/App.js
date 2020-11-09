@@ -14,7 +14,7 @@ const App = () => {
   const [values, setValues] = useState(defaultValues)
   const [search, setSearch] = useState('')
   const [ persons, setPersons] = useState([])
-  
+
   // Fetch data
   useEffect(() => {
     axios
