@@ -62,7 +62,7 @@ const App = () => {
 
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
           setMessage({message: `Information of ${name} has already been removed from server`, severity: 'error'})
           updateFetch()
           setTimeout(() => setMessage({message: '', severity: ''}), 2000)
@@ -79,6 +79,11 @@ const App = () => {
         handleReset()
         updateFetch()
       })
+        .catch(err => {
+          console.log(err.response.data)
+          setMessage({message: err.response.data.error, severity: 'error'})
+          setTimeout(() => setMessage({message: '', severity: ''}), 4000)
+        })
   }
 
   const handleUpdate = (userData) => {
@@ -93,7 +98,7 @@ const App = () => {
           updateFetch()
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
           setMessage({message: `Information of ${userData.name} has already been removed from server`, severity: 'error'})
           updateFetch()
           setTimeout(() => setMessage({message: '', severity: ''}), 2000)
