@@ -60,9 +60,21 @@ test('a valid blog can be added ', async () => {
   const res = await api.get('/api/blogs')
   const title = res.body.map(r => r.title)
   expect(res.body).toHaveLength(initialBlogs.length + 1)
-  expect(title).toContain(
-    'React patterns'
-  )
+  expect(title).toContain(newBlog.title)
+})
+
+test('a valid blog can be deleted', async () => {
+  const firstAvailableBlog = await api.get('/api/blogs')
+  const blogDelete = firstAvailableBlog.body[0]
+
+  await api
+    .delete(`/api/blogs/${blogDelete.id}`)
+    .expect(204)
+
+  const res = await api.get('/api/blogs')
+  const title = res.body.map(r => r.title)
+  expect(res.body).toHaveLength(initialBlogs.length - 1)
+  expect(title).not.toContain(blogDelete.title)
 })
 
 test('default value of likes is zero ', async () => {
