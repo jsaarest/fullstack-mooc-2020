@@ -5,7 +5,8 @@ module.exports = {
     'es2021': true,
     'node': true,
     'mongo': true,
-    'shared-node-browser': true
+    'shared-node-browser': true,
+    'jest': true
   },
   'extends': 'eslint:recommended',
   'parserOptions': {
