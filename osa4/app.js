@@ -20,9 +20,8 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 // Config
 app.use(cors())
 app.use(express.json())
-app.use(middleware.errorHandler)
 
-// Routes
 app.use('/api/blogs', blogsRouter)
+app.use(middleware.errorHandler)
 
 module.exports = app
