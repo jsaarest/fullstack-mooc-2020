@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from "./components/Notification"
+import CreateBlogForm from "./components/CreateBlogForm"
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 
 const App = () => {
-  const defaultFormData = { title: '', author: '', url: '' }
+
   const defaultMessage = { message: '', variant: '' }
 
   const [blogs, setBlogs] = useState([])
@@ -15,7 +16,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(defaultMessage)
   const [fetchData, setFetchData] = useState(true);
-  const [form, setForm] = useState(defaultFormData)
+  const [formOpen, setFormOpen] = useState(false)
 
   //console.log("user", user)
 
@@ -66,36 +67,11 @@ const App = () => {
       return(
         <>
           <p>{name} logged in</p>
-          <button onClick={handleLogout}>logout</button>
+          <button onClick={handleLogout} style={{marginBottom: 12}}>Logout</button>
         </>
       )
     }
     return null
-  }
-
-  const handleAddBlog = async (event) => {
-    event.preventDefault()
-    try {
-      const newObject = {
-        title: form.title,
-        author: form.author,
-        url: form.url
-      }
-      const newBlog = await blogService.create(newObject)
-      setMessage({ message: `${newBlog.title} has been added!`, variant: 'success' })
-      setForm(defaultFormData)
-      setFetchData(!fetchData)
-      setTimeout(() => setMessage(defaultMessage), 5000)
-    }
-    catch (err) {
-      console.log(setMessage({ message: err.message, variant: 'error' }))
-      setTimeout(() => setMessage(defaultMessage), 5000)
-    }
-  }
-
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setForm({...form, [name]: value})
   }
 
 
@@ -124,50 +100,31 @@ const App = () => {
                 onChange={({target}) => setPassword(target.value)}
               />
             </div>
-            <button type="submit">login</button>
+            <button type="submit">Login</button>
           </form>
         </>
         :
         <div>
           <h2>Blogs</h2>
-          <ShowLoggedInStatus/>
+          <ShowLoggedInStatus />
           <div>
-            <h2>Create new</h2>
-            <form onSubmit={handleAddBlog}>
-              <div>
-                Title:
-                <input
-                  type="text"
-                  value={form.title}
-                  name="title"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                Author:
-                <input
-                  type="text"
-                  value={form.author}
-                  name="author"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                URL:
-                <input
-                  type="text"
-                  value={form.url}
-                  name="url"
-                  onChange={handleChange}
-                />
-              </div>
-              <button onClick={handleAddBlog}>Create</button>
-            </form>
+            { formOpen ?
+              <CreateBlogForm
+                setFetchData={setFetchData}
+                fetchData={fetchData}
+                setFormOpen={setFormOpen}
+              /> :
+              <button
+                onClick={() => setFormOpen(true)}>
+                New blog
+              </button>
+            }
           </div>
           {blogs.map(blog =>
             <Blog key={blog.id} blog={blog}/>
           )}
-        </div>}
+        </div>
+      }
       </>
 
   )
