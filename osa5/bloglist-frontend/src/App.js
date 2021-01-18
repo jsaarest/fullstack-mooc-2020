@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useImperativeHandle } from 'react'
+import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import Notification from "./components/Notification"
-import CreateBlogForm from "./components/CreateBlogForm"
+import Notification from './components/Notification'
+import CreateBlogForm from './components/CreateBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -15,7 +15,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(defaultMessage)
-  const [fetchData, setFetchData] = useState(true); // Create dependency for useState
+  const [fetchData, setFetchData] = useState(true) // Create dependency for useState
   const [formOpen, setFormOpen] = useState(false)
 
 
@@ -32,7 +32,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setMessage({message: 'wrong credentials', variant: 'error'})
+      setMessage({ message: 'wrong credentials', variant: 'error' })
       setTimeout(() => {
         setMessage(null)
       }, 5000)
@@ -61,12 +61,12 @@ const App = () => {
   }, [])
 
   const ShowLoggedInStatus = () => {
-    if(!!user){
-      const name = user.name || user.username;
+    if(user){
+      const name = user.name || user.username
       return(
         <>
           <p>{name} logged in</p>
-          <button onClick={handleLogout} style={{marginBottom: 12}}>Logout</button>
+          <button onClick={handleLogout} style={{ marginBottom: 12 }}>Logout</button>
         </>
       )
     }
@@ -76,7 +76,7 @@ const App = () => {
 
   return (
     <>
-    <Notification message={message.message} variant={message.variant} />
+      <Notification message={message.message} variant={message.variant} />
       {user === null ?
         <>
           <h2>Login</h2>
@@ -87,7 +87,7 @@ const App = () => {
                 type="text"
                 value={username}
                 name="Username"
-                onChange={({target}) => setUsername(target.value)}
+                onChange={({ target }) => setUsername(target.value)}
               />
             </div>
             <div>
@@ -96,7 +96,7 @@ const App = () => {
                 type="password"
                 value={password}
                 name="Password"
-                onChange={({target}) => setPassword(target.value)}
+                onChange={({ target }) => setPassword(target.value)}
               />
             </div>
             <button type="submit">Login</button>
@@ -130,7 +130,7 @@ const App = () => {
           )}
         </div>
       }
-      </>
+    </>
 
   )
 }

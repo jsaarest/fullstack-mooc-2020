@@ -14,8 +14,6 @@ const Blog = ({ blog, fetchData, setFetchData, user }) => {
     width: 350
   }
 
-  //console.log(blog)
-
   const handleUpdate = async () => {
     const updateObj = {
       title: blog.title,
@@ -32,8 +30,6 @@ const Blog = ({ blog, fetchData, setFetchData, user }) => {
     }
 
   }
-  console.log("blog", blog)
-  console.log(user)
 
   const isCreatedByUser = () => user.username === blog?.user?.username
 
@@ -59,7 +55,7 @@ const Blog = ({ blog, fetchData, setFetchData, user }) => {
         <div>
           likes: {blog.likes}<button onClick={handleUpdate}>like</button>
         </div>
-        { isCreatedByUser() && <button style={{marginTop: 12}} onClick={handleDelete}>delete</button>}
+        { isCreatedByUser() && <button style={{ marginTop: 12 }} onClick={handleDelete}>delete</button>}
 
 
       </div>

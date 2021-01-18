@@ -1,12 +1,13 @@
-import React, {useState} from "react";
-import blogService from "../services/blogs";
+import React, { useState } from 'react'
+import blogService from '../services/blogs'
 
 
-const CreateBlogForm = ({setFetchData, fetchData, setFormOpen}) => {
+const CreateBlogForm = ({ setFetchData, fetchData, setFormOpen }) => {
 
   const defaultFormData = { title: '', author: '', url: '' }
   const defaultMessage = { message: '', variant: '' }
   const [form, setForm] = useState(defaultFormData)
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState(defaultMessage)
 
   const handleAddBlog = async (event) => {
@@ -32,7 +33,7 @@ const CreateBlogForm = ({setFetchData, fetchData, setFormOpen}) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target
-    setForm({...form, [name]: value})
+    setForm({ ...form, [name]: value })
   }
 
   return(

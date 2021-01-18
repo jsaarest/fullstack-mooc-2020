@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const Notification = ({ message, variant }) => {
   if (!message) {
@@ -24,6 +24,6 @@ const Notification = ({ message, variant }) => {
 
 Notification.propTypes = {
   variant: PropTypes.oneOf(['success', 'error', ''])
-};
+}
 
 export default Notification
