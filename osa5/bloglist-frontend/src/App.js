@@ -15,7 +15,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(defaultMessage)
-  const [fetchData, setFetchData] = useState(true);
+  const [fetchData, setFetchData] = useState(true); // Create dependency for useState
   const [formOpen, setFormOpen] = useState(false)
 
 
@@ -49,7 +49,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )
-  }, [fetchData])
+  }, [fetchData]) // Control state to fetch latest data
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user')
@@ -119,12 +119,13 @@ const App = () => {
               </button>
             }
           </div>
-          {blogs.map(blog =>
+          {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
             <Blog
               key={blog.id}
               blog={blog}
               fetchData={fetchData}
               setFetchData={setFetchData}
+              user={user}
             />
           )}
         </div>

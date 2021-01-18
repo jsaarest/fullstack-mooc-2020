@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, fetchData, setFetchData }) => {
+const Blog = ({ blog, fetchData, setFetchData, user }) => {
 
   const [expand, setExpand] = useState(false)
 
@@ -32,6 +32,23 @@ const Blog = ({ blog, fetchData, setFetchData }) => {
     }
 
   }
+  console.log("blog", blog)
+  console.log(user)
+
+  const isCreatedByUser = () => user.username === blog?.user?.username
+
+  const handleDelete = async () => {
+    if(window.confirm(`Are you sure you want to delete: ${blog.title} by ${blog.author}`)){
+      //console.log(blog.id)
+      try {
+        await blogService.deleteById(blog.id)
+        setFetchData(!fetchData)
+      }
+      catch (err) {
+        console.log(err.message)
+      }
+    }
+  }
 
   return (
     <div style={cardStyle}>
@@ -39,7 +56,11 @@ const Blog = ({ blog, fetchData, setFetchData }) => {
       {expand &&
       <div>
         <p>url: {blog.url}</p>
-        <p>likes: {blog.likes}</p><button onClick={handleUpdate}>like</button>
+        <div>
+          likes: {blog.likes}<button onClick={handleUpdate}>like</button>
+        </div>
+        { isCreatedByUser() && <button style={{marginTop: 12}} onClick={handleDelete}>delete</button>}
+
 
       </div>
       }
