@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useImperativeHandle } from 'react'
 import Blog from './components/Blog'
 import Notification from "./components/Notification"
 import CreateBlogForm from "./components/CreateBlogForm"
@@ -18,7 +18,6 @@ const App = () => {
   const [fetchData, setFetchData] = useState(true);
   const [formOpen, setFormOpen] = useState(false)
 
-  //console.log("user", user)
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -121,7 +120,12 @@ const App = () => {
             }
           </div>
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog}/>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              fetchData={fetchData}
+              setFetchData={setFetchData}
+            />
           )}
         </div>
       }
